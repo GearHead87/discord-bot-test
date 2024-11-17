@@ -1,0 +1,31 @@
+{
+	"name": "discordbot-test",
+	"version": "1.0.0",
+	"main": "dist/index.js",
+	"type": "module",
+	"scripts": {
+		"start": "node --experimental-specifier-resolution=node dist/index.js",
+		"build": "tsc",
+		"lint": "eslint . --ext .ts",
+		"dev": "tsx watch src/index.ts",
+		"dev-old": "tsc -w",
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"description": "",
+	"devDependencies": {
+		"@eslint/js": "^9.15.0",
+		"@types/node": "^22.9.0",
+		"eslint": "^9.15.0",
+		"globals": "^15.12.0",
+		"tsx": "^4.19.2",
+		"typescript": "^5.6.3",
+		"typescript-eslint": "^8.14.0"
+	},
+	"dependencies": {
+		"discord.js": "^14.16.3",
+		"dotenv": "^16.4.5"
+	}
+}
