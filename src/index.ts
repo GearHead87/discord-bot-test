@@ -2,6 +2,7 @@ import 'dotenv/config';
 import { Client, Events, GatewayIntentBits, Guild, IntentsBitField } from 'discord.js';
 // const wait = require('node:timers/promises').setTimeout;
 import wait from 'timers/promises';
+import fetch from 'node-fetch';
 
 const client = new Client({
 	intents: [
@@ -27,7 +28,7 @@ client.on(Events.InteractionCreate, async (interaction) => {
 
 		console.log(`Received command: ${interaction.commandName}`);
 		if (interaction.commandName === 'hey') {
-			await interaction.reply("hey from bot")
+			await interaction.reply('hey from bot');
 			// await interaction.deferReply({ ephemeral: true });
 			// await wait.setTimeout(4_000);
 			// await interaction.followUp('asdf');
@@ -49,9 +50,25 @@ client.on('messageCreate', async (message) => {
 		return;
 	}
 
-	if (message.content === 'ping') {
-		await message.reply('Pong!');
-		await message.react('😏');
+	const attachment = message.attachments.first();
+	// console.log(attachment);
+
+	if (!attachment || !attachment.name?.endsWith('.xlsx')) {
+		await message.reply('Please upload an Excel file (.xlsx)');
+		return;
+	}
+
+	try {
+		await message.reply('Processing your Excel file...');
+
+		const response = await fetch(attachment.url);
+		const file = await response.arrayBuffer()
+		console.log(file);
+	} catch (error) {
+		console.error('Error processing Excel file:', error);
+		await message.reply(
+			'An error occurred while processing your Excel file. Please try again.'
+		);
 	}
 });
 
